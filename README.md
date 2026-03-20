@@ -23,7 +23,83 @@ Webanwendung zur Organisation von Schützenwettkämpfen mit Vue.js Frontend, PHP
 
 ---
 
-## Voraussetzungen
+## Schnellstart mit Docker (empfohlen)
+
+Die einfachste Methode die Anwendung zu starten ist mit Docker. Damit werden alle Abhängigkeiten automatisch installiert und die Datenbank wird initialisiert.
+
+### Voraussetzungen
+
+- [Docker](https://docs.docker.com/get-docker/) und [Docker Compose](https://docs.docker.com/compose/install/) müssen installiert sein.
+
+### Starten
+
+```bash
+# Repository klonen
+git clone https://github.com/caemmerer82-cloud/Sch-tzenverein.git
+cd Sch-tzenverein
+
+# Container bauen und starten
+docker compose up -d
+```
+
+Das war's! Die Anwendung ist unter **http://localhost:8080** erreichbar.
+
+Beim ersten Start wird automatisch:
+- Das Frontend gebaut (Vue.js + Vite)
+- Die MariaDB-Datenbank erstellt und initialisiert
+- Alle Standard-Altersklassen angelegt
+- Der PHP-Server gestartet
+
+### Stoppen
+
+```bash
+docker compose down
+```
+
+### Daten zurücksetzen
+
+Um die Datenbank komplett zurückzusetzen:
+
+```bash
+docker compose down -v
+docker compose up -d
+```
+
+### Konfiguration anpassen
+
+Die Datenbank-Zugangsdaten können in der `docker-compose.yml` angepasst werden:
+
+```yaml
+environment:
+  MYSQL_ROOT_PASSWORD: root_secret        # Root-Passwort
+  MYSQL_DATABASE: schuetzenwettbewerb     # Datenbankname
+  MYSQL_USER: schuetzen                   # Datenbank-Benutzer
+  MYSQL_PASSWORD: schuetzen_secret        # Datenbank-Passwort
+```
+
+> **Wichtig:** Ändere die Passwörter vor dem Einsatz in einer Produktionsumgebung!
+
+### Container-Logs anzeigen
+
+```bash
+# Alle Logs
+docker compose logs
+
+# Nur App-Logs
+docker compose logs app
+
+# Nur Datenbank-Logs
+docker compose logs db
+
+# Logs live verfolgen
+docker compose logs -f
+```
+
+---
+
+## Manuelle Installation (ohne Docker)
+
+### Voraussetzungen
 
 Folgende Software muss auf dem System installiert sein:
 
